@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f3e9">
+  <title>Your planner — Bảo Thy</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body class="workbench-page">
+  <div class="workbench-layout">
+    <aside class="sidebar" aria-label="Planner sidebar">
+      <a class="wordmark sidebar-brand" href="index.html"><span class="wordmark-flower">✿</span><span>Bảo Thy</span></a>
+      <p class="sidebar-caption">YOUR PERSONAL PLANNER</p>
+      <nav class="planner-nav" aria-label="Planner sections">
+        <button class="nav-item is-active" type="button" data-view="today"><span class="nav-icon">☼</span><span>Today</span></button>
+        <button class="nav-item" type="button" data-view="tasks"><span class="nav-icon">⌑</span><span>Tasks</span><span class="nav-count" id="task-count">0</span></button>
+        <button class="nav-item" type="button" data-view="goals"><span class="nav-icon">↗</span><span>Goals</span></button>
+        <button class="nav-item" type="button" data-view="checkin"><span class="nav-icon">♡</span><span>Daily Check-in</span></button>
+        <button class="nav-item" type="button" data-view="notes"><span class="nav-icon">✎</span><span>Notes</span></button>
+      </nav>
+      <div class="sidebar-bottom"><div class="sidebar-flower">✿</div><p>Make a little<br>room for yourself.</p><a href="index.html">About Bảo Thy ↗</a></div>
+    </aside>
+
+    <main class="workbench-main">
+      <header class="workbench-topbar"><a class="mobile-brand wordmark" href="index.html"><span class="wordmark-flower">✿</span><span>Bảo Thy</span></a><p class="local-save"><span></span> Saved in this browser</p><time id="today-date"></time></header>
+
+      <section class="planner-view is-visible" data-view-panel="today" id="view-today">
+        <div class="view-intro"><p class="eyebrow" id="today-eyebrow">A NEW PAGE</p><h1>Good day, Bảo Thy.</h1><p class="view-lede">You do not have to do it all. Let’s find a good place to begin.</p></div>
+        <div class="today-summary-grid">
+          <article class="summary-card summary-sage"><span class="summary-label">ON YOUR LIST</span><strong id="today-open-count">0</strong><span>tasks to tend to</span></article>
+          <article class="summary-card summary-peach"><span class="summary-label">ALREADY DONE</span><strong id="today-done-count">0</strong><span>small wins today</span></article>
+          <article class="summary-card summary-lilac"><span class="summary-label">GROWING SLOWLY</span><strong id="today-goal-count">0</strong><span>goals in progress</span></article>
+        </div>
+        <div class="today-columns">
+          <section class="paper-card today-tasks-card"><div class="card-heading"><div><p class="eyebrow">ONE THING AT A TIME</p><h2>Today’s tasks</h2></div><button class="quiet-link" type="button" data-go-view="tasks">See all →</button></div><form class="inline-add-form" id="quick-task-form"><label class="sr-only" for="quick-task-title">Add a task</label><input id="quick-task-title" maxlength="120" placeholder="Add a little task…" required><button class="icon-submit" type="submit" aria-label="Add task">＋</button></form><div class="task-list compact-task-list" id="today-task-list"></div></section>
+          <section class="paper-card today-checkin-card"><p class="eyebrow">A MOMENT FOR YOU</p><h2>How are you arriving?</h2><p class="muted-copy">A quick check-in can be just a word or two.</p><div class="mood-row mood-row-small" aria-label="Choose a mood"><button class="mood-choice" type="button" data-mood="Bright" aria-label="Bright">☀</button><button class="mood-choice" type="button" data-mood="Okay" aria-label="Okay">◡</button><button class="mood-choice" type="button" data-mood="Tender" aria-label="Tender">♡</button><button class="mood-choice" type="button" data-mood="Tired" aria-label="Tired">☾</button><button class="mood-choice" type="button" data-mood="Heavy" aria-label="Heavy">☁</button></div><textarea id="today-checkin-note" class="soft-textarea quick-note" maxlength="240" placeholder="Today, I’m feeling…" aria-label="A short note about how you feel"></textarea><button class="button button-small button-primary" type="button" id="save-today-checkin">Save this moment</button><span class="save-feedback" id="today-checkin-feedback" aria-live="polite"></span></section>
+        </div>
+        <section class="paper-card today-goals-card"><div class="card-heading"><div><p class="eyebrow">A LITTLE FURTHER</p><h2>Your goals, gently</h2></div><button class="quiet-link" type="button" data-go-view="goals">Visit goals →</button></div><div id="today-goal-list" class="today-goal-list"></div></section>
+      </section>
+
+      <section class="planner-view" data-view-panel="tasks" id="view-tasks" hidden>
+        <div class="view-intro"><p class="eyebrow">MAKE A LITTLE SPACE</p><h1>Your tasks.</h1><p class="view-lede">A list is only a place to begin. You can change it anytime.</p></div>
+        <section class="paper-card"><form class="task-create-form" id="task-form"><div class="field-grow"><label for="task-title">What would you like to do?</label><input id="task-title" maxlength="120" placeholder="A small, clear next step…" required></div><div><label for="task-date">When</label><input type="date" id="task-date"></div><div><label for="task-priority">A little note</label><select id="task-priority"><option value="gentle">Whenever</option><option value="focus">Focus</option><option value="today">Today</option></select></div><button class="button button-primary" type="submit">Add task <span aria-hidden="true">＋</span></button></form></section>
+        <div class="task-toolbar"><h2>On your list <span id="tasks-total" class="soft-number">0</span></h2><div class="filter-pills" role="group" aria-label="Filter tasks"><button type="button" class="filter-pill is-selected" data-task-filter="all">All</button><button type="button" class="filter-pill" data-task-filter="open">To do</button><button type="button" class="filter-pill" data-task-filter="done">Done</button></div></div>
+        <section class="paper-card task-list-card"><div class="task-list" id="all-task-list"></div><p class="empty-state" id="tasks-empty">Nothing here just yet. Add a task when you’re ready.</p></section>
+      </section>
+
+      <section class="planner-view" data-view-panel="goals" id="view-goals" hidden>
+        <div class="view-intro"><p class="eyebrow">GROW AT YOUR OWN PACE</p><h1>Little by little.</h1><p class="view-lede">Give a goal a name, then break it into steps that feel possible.</p></div>
+        <form class="paper-card goal-create-form" id="goal-form"><label for="goal-title">A goal you’re tending to</label><div class="goal-create-row"><input id="goal-title" maxlength="100" placeholder="Learn a few songs on the piano…" required><button class="button button-primary" type="submit">Plant this goal <span aria-hidden="true">＋</span></button></div></form>
+        <div class="goal-grid" id="goal-list"></div><p class="empty-state" id="goals-empty">No goals planted yet. Start with something that matters to you.</p>
+      </section>
+
+      <section class="planner-view" data-view-panel="checkin" id="view-checkin" hidden>
+        <div class="view-intro"><p class="eyebrow">NO RIGHT WAY TO FEEL</p><h1>Check in with yourself.</h1><p class="view-lede">Choose what feels closest. You don’t need to explain it perfectly.</p></div>
+        <section class="paper-card checkin-form-card"><p class="eyebrow">TODAY · <span id="checkin-date-label"></span></p><div class="mood-row mood-row-large" role="group" aria-label="Choose how you feel"><button class="mood-choice" type="button" data-mood="Bright"><span>☀</span><small>Bright</small></button><button class="mood-choice" type="button" data-mood="Okay"><span>◡</span><small>Okay</small></button><button class="mood-choice" type="button" data-mood="Tender"><span>♡</span><small>Tender</small></button><button class="mood-choice" type="button" data-mood="Tired"><span>☾</span><small>Tired</small></button><button class="mood-choice" type="button" data-mood="Heavy"><span>☁</span><small>Heavy</small></button></div><label for="checkin-note">A few words for today</label><textarea id="checkin-note" class="soft-textarea checkin-textarea" maxlength="500" placeholder="What’s taking up space in your mind? What might help?"></textarea><div class="form-bottom"><span class="muted-copy">Only you can see this, in this browser.</span><button class="button button-primary" type="button" id="save-checkin">Save today’s check-in</button></div><span class="save-feedback" id="checkin-feedback" aria-live="polite"></span></section>
+        <section class="checkin-history-section"><div class="card-heading"><div><p class="eyebrow">LOOKING BACK, KINDLY</p><h2>Recent check-ins</h2></div></div><div id="checkin-history" class="checkin-history"></div><p class="empty-state" id="checkins-empty">Your check-ins will gather here, one day at a time.</p></section>
+      </section>
+
+      <section class="planner-view" data-view-panel="notes" id="view-notes" hidden>
+        <div class="view-intro"><p class="eyebrow">A PLACE TO PUT IT DOWN</p><h1>Notes to keep.</h1><p class="view-lede">Thoughts, lists, reminders, half-formed ideas—leave them here.</p></div>
+        <div class="notes-layout"><aside class="paper-card notes-list-card"><div class="card-heading"><h2>Your notes</h2><button class="icon-submit" type="button" id="new-note" aria-label="Create a new note">＋</button></div><div id="notes-list" class="notes-list"></div><p class="empty-state" id="notes-empty">No notes yet.</p></aside><section class="paper-card note-editor"><label class="sr-only" for="note-title">Note title</label><input id="note-title" class="note-title-input" maxlength="100" placeholder="A title for this note…"><label class="sr-only" for="note-body">Note</label><textarea id="note-body" class="note-body-input" placeholder="Start wherever you like…"></textarea><div class="note-editor-footer"><span id="note-saved-status" class="muted-copy" aria-live="polite">Saved in this browser</span><button class="quiet-link delete-note-button" type="button" id="delete-note" disabled>Delete note</button></div></section></div>
+      </section>
+
+      <footer class="workbench-footer"><span>✿</span> A gentle plan is still a plan. <a href="index.html">Back to Bảo Thy</a></footer>
+    </main>
+  </div>
+  <nav class="mobile-nav" aria-label="Planner sections">
+    <button class="nav-item is-active" type="button" data-view="today"><span class="nav-icon">☼</span><span>Today</span></button>
+    <button class="nav-item" type="button" data-view="tasks"><span class="nav-icon">⌑</span><span>Tasks</span></button>
+    <button class="nav-item" type="button" data-view="goals"><span class="nav-icon">↗</span><span>Goals</span></button>
+    <button class="nav-item" type="button" data-view="checkin"><span class="nav-icon">♡</span><span>Check-in</span></button>
+    <button class="nav-item" type="button" data-view="notes"><span class="nav-icon">✎</span><span>Notes</span></button>
+  </nav>
+</body>
+</html>
+
